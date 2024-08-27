@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'].'/gesman_cliente/connection/ConnGesmanDb.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/gesman/connection/ConnGesmanDb.php';
 
 $msg="<div class='alert alert-info p-2 mb-0 text-center' role='alert'><strong>Ingrese sus credenciales.</strong></div>";
 $estado=false;
@@ -22,13 +22,11 @@ if(!empty($_POST['usu']) and !empty($_POST['psw'])){
         }else{
             $msg="<div class='alert alert-danger p-2 mb-0 text-center' role='alert'><strong>Acceso denegado!. </strong> Usuario o contraseña incorrectos.</div>";
         }
-
     } catch (PDOException $pe) {
         $msg="<div class='alert alert-danger p-2 mb-0 text-center' role='alert'><strong>Acceso denegado!. </strong> Error al validar sus datos..</div>";
         $stmt = null;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -124,7 +122,6 @@ if(!empty($_POST['usu']) and !empty($_POST['psw'])){
         }
 
         .form-signin #inputEmail,
-        .form-signin #inputRuc,
         .form-signin #inputPassword {
             direction: ltr;
             height: 44px;
@@ -199,7 +196,7 @@ if(!empty($_POST['usu']) and !empty($_POST['psw'])){
             <?php
                 echo $msg;
                 if($estado){
-                    echo '<script>','setTimeout("location.href='."'"."/gesman_cliente/Empresas.php';".'"'.',3000);','</script>';
+                    echo '<script>','setTimeout("location.href='."'"."/gesman/Empresas.php';".'"'.',3000);','</script>';
                     echo '
                     <div class="alert alert-success alert-dismissable text-center">
                         <h4>BIENVENIDO</h4>
@@ -212,7 +209,6 @@ if(!empty($_POST['usu']) and !empty($_POST['psw'])){
                     echo '
                     <form class="form-signin" method="post">
                         <span id="reauth-email" class="reauth-email"></span>
-                        <input type="text" id="inputRuc" name="ruc" class="form-control" placeholder="Ruc" required autofocus>
                         <input type="text" id="inputEmail" name="usu" class="form-control" placeholder="Usuario" required autofocus>
                         <input type="password" id="inputPassword" name="psw" class="form-control" placeholder="Contraseña" required>
                         <div id="remember" class="checkbox"><label><input type="checkbox" value="remember-me"> Remember me</label></div>

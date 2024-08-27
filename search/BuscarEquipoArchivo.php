@@ -10,7 +10,7 @@ $respuesta = @file_get_contents($url_buscar_archivo);
 
 // Verificar si hubo un error al obtener el archivo
 if ($respuesta === FALSE) {
-    die('Error al obtener el archivo.');
+    echo json_encode(array('error'=>'Error al obtener el archivo.'));
 }
 
 // Intentar decodificar el JSON
@@ -18,22 +18,18 @@ $datos = @json_decode($respuesta, true);
 
 // Verificar si la decodificación fue exitosa
 if ($datos === NULL) {
-    die('Error al decodificar JSON.');
+    echo json_encode(array('error'=>'Error al decodificar JSON.'));
 }
 
 // Verificar si se obtuvieron los datos del archivo correctamente
 if (isset($datos['archivo']) && isset($datos['tipo'])) {
     // Configurar las cabeceras según el tipo de archivo (imagen o PDF)
-    header('Content-Type: ' . $datos['tipo']);
+    header('Content-Type: '.$datos['tipo']);
     
     // Mostrar el archivo (decodificado de base64)
     echo base64_decode($datos['archivo']);
 } else {
     // Si los datos están incompletos o el JSON está mal formado
-    echo 'Error al obtener los datos del archivo.';
+    echo json_encode(array('error'=>'Error al obtener los datos del archivo.'));
 }
 ?>
-
-
-
-
